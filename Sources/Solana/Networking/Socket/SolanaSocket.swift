@@ -127,7 +127,7 @@ public class SolanaSocket {
 
 extension SolanaSocket: WebSocketDelegate {
 
-    public func didReceive(event: WebSocketEvent, client: WebSocket) {
+    public func didReceive(event: WebSocketEvent, client: WebSocketClient) {
         log(event: event)
         switch event {
         case .connected:
@@ -144,6 +144,8 @@ extension SolanaSocket: WebSocketDelegate {
         case .cancelled: break
         case .error(let error): break
             self.delegate?.error(error: error)
+        case .peerClosed:
+            delegate?.disconnected(reason: "peerClosed", code: 1)
         }
     }
 
@@ -169,6 +171,8 @@ extension SolanaSocket: WebSocketDelegate {
             if enableDebugLogs { debugPrint("cancelled") }
         case .error(let error):
             if enableDebugLogs { debugPrint("error \(error?.localizedDescription ?? "")") }
+        case .peerClosed:
+            if enableDebugLogs { debugPrint("peerClosed") }
         }
     }
 
