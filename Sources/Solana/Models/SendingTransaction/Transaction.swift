@@ -6,8 +6,8 @@ public struct Transaction {
     private static let DEFAULT_SIGNATURE = Data(capacity: 0)
     
     var signatures = [Signature]()
-    var feePayer: PublicKey
-    var recentBlockhash: String
+    public var feePayer: PublicKey
+    public var recentBlockhash: String
 
     public private(set) var instructions = [TransactionInstruction]()
     //        TODO: nonceInfo
