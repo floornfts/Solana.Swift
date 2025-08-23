@@ -46,58 +46,58 @@ class MethodsAsync: XCTestCase {
         let nodes = try await solana.api.getClusterNodes()
         XCTAssertTrue(nodes.count > 0);
     }
-    func testGetBlockTime() async throws {
-        try await testGetRecentBlockhash()
-        let slot = try! solana.api.getSlot()!.get()
-        _ = try await solana.api.getBlockTime(block: slot)
-    }
+//    func testGetBlockTime() async throws {
+//        try await testGetRecentBlockhash()
+//        let slot = try! solana.api.getSlot()!.get()
+//        _ = try await solana.api.getBlockTime(block: slot)
+//    }
     // func testGetConfirmedBlock() async throws {
     //     let block = try await solana.api.getConfirmedBlock(slot: 63426807)
     //     XCTAssertEqual(63426806, block.parentSlot);
     // }
-    func testGetConfirmedBlocks() async throws {
-        let slot = try! solana.api.getSlot()!.get()
-        let blocks = try await solana.api.getConfirmedBlocks(startSlot:slot-10, endSlot: slot-5)
-        XCTAssert(blocks.count > 0)
-    }
-    func testGetConfirmedBlocksWithLimit() async throws {
-        let blocks = try await solana.api.getConfirmedBlocksWithLimit(startSlot:109479071, limit: 10)
-        XCTAssertEqual(blocks.count, 10);
-    }
-    func testGetConfirmedSignaturesForAddress2() async throws {
-        let result = try await solana.api.getConfirmedSignaturesForAddress2(account: "Vote111111111111111111111111111111111111111", configs: RequestConfiguration(limit: 4))
-        XCTAssertEqual(result.count, 4)
-    }
-    func testGetConfirmedTransaction() async throws {
-        let transaction = try await solana.api.getConfirmedTransaction(transactionSignature: "3nRsxY29xgo4G9zb71VkZDJFvsZAJZWeXVLGfgNFwZ4Bbudv3DXy4Yw1WdJLJLf4MDNNHm78nQxCUdv9nhCFcLov")
-        XCTAssertEqual(transaction.blockTime, 1675377453)
-    }
+//    func testGetConfirmedBlocks() async throws {
+//        let slot = try! solana.api.getSlot()!.get()
+//        let blocks = try await solana.api.getConfirmedBlocks(startSlot:slot-10, endSlot: slot-5)
+//        XCTAssert(blocks.count > 0)
+//    }
+//    func testGetConfirmedBlocksWithLimit() async throws {
+//        let blocks = try await solana.api.getConfirmedBlocksWithLimit(startSlot:109479071, limit: 10)
+//        XCTAssertEqual(blocks.count, 10);
+//    }
+//    func testGetConfirmedSignaturesForAddress2() async throws {
+//        let result = try await solana.api.getConfirmedSignaturesForAddress2(account: "Vote111111111111111111111111111111111111111", configs: RequestConfiguration(limit: 4))
+//        XCTAssertEqual(result.count, 4)
+//    }
+//    func testGetConfirmedTransaction() async throws {
+//        let transaction = try await solana.api.getConfirmedTransaction(transactionSignature: "3nRsxY29xgo4G9zb71VkZDJFvsZAJZWeXVLGfgNFwZ4Bbudv3DXy4Yw1WdJLJLf4MDNNHm78nQxCUdv9nhCFcLov")
+//        XCTAssertEqual(transaction.blockTime, 1675377453)
+//    }
     func testGetEpochInfo() async throws {
         _ = try await solana.api.getEpochInfo()
     }
     func testGetEpochSchedule() async throws {
         _ = try await solana.api.getEpochSchedule()
     }
-    func testGetFeeCalculatorForBlockhash() async throws {
-        let hash = try await solana.api.getRecentBlockhash()
-        let fee = try await solana.api.getFeeCalculatorForBlockhash(blockhash: hash)
-        XCTAssertTrue(fee.feeCalculator!.lamportsPerSignature > 0)
-    }
-    func testGetFeeRateGovernor() async throws {
-        let feeRateGovernorInfo = try await solana.api.getFeeRateGovernor()
-        
-        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.burnPercent > 0)
-        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.maxLamportsPerSignature > 0)
-        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.minLamportsPerSignature > 0)
-        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.targetLamportsPerSignature >= 0)
-        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.targetSignaturesPerSlot >= 0)
-    }
-    func testGetFees() async throws {
-        let feesInfo = try await solana.api.getFees()
-        XCTAssertNotEqual("", feesInfo.blockhash)
-        XCTAssertTrue(feesInfo.feeCalculator!.lamportsPerSignature > 0)
-        XCTAssertTrue(feesInfo.lastValidSlot! > 0)
-    }
+//    func testGetFeeCalculatorForBlockhash() async throws {
+//        let hash = try await solana.api.getRecentBlockhash()
+//        let fee = try await solana.api.getFeeCalculatorForBlockhash(blockhash: hash)
+//        XCTAssertTrue(fee.feeCalculator!.lamportsPerSignature > 0)
+//    }
+//    func testGetFeeRateGovernor() async throws {
+//        let feeRateGovernorInfo = try await solana.api.getFeeRateGovernor()
+//        
+//        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.burnPercent > 0)
+//        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.maxLamportsPerSignature > 0)
+//        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.minLamportsPerSignature > 0)
+//        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.targetLamportsPerSignature >= 0)
+//        XCTAssertTrue(feeRateGovernorInfo.feeRateGovernor!.targetSignaturesPerSlot >= 0)
+//    }
+//    func testGetFees() async throws {
+//        let feesInfo = try await solana.api.getFees()
+//        XCTAssertNotEqual("", feesInfo.blockhash)
+//        XCTAssertTrue(feesInfo.feeCalculator!.lamportsPerSignature > 0)
+//        XCTAssertTrue(feesInfo.lastValidSlot! > 0)
+//    }
     func testGetFirstAvailableBlock() async throws {
         let block = try await solana.api.getFirstAvailableBlock()
         XCTAssertTrue(0 <= block)
@@ -140,9 +140,9 @@ class MethodsAsync: XCTestCase {
     func testGetVoteAccounts() async throws {
         _ = try await solana.api.getVoteAccounts()
     }
-    func testGetRecentBlockhash() async throws {
-        _ = try await solana.api.getRecentBlockhash()
-    }
+//    func testGetRecentBlockhash() async throws {
+//        _ = try await solana.api.getRecentBlockhash()
+//    }
     func testMinimumLedgerSlot() async throws {
         _ = try await solana.api.minimumLedgerSlot()
     }

@@ -173,12 +173,11 @@ extension Transaction.Message {
         let accountsBlock = Shortvec.nextBlock(buffer: byteArray, multiplier: PUBKEY_LENGTH)
         byteArray = accountsBlock.1
         
-        let accountKeys = accountsBlock.0
-            .bytes
+        let accountKeys = Array(accountsBlock.0)
             .chunked(into: PUBKEY_LENGTH)
             .map { Base58.encode($0) }
         
-        let recentBlockhash = byteArray[0..<PUBKEY_LENGTH].bytes
+        let recentBlockhash = Array(byteArray[0..<PUBKEY_LENGTH])
         byteArray = Data(byteArray.dropFirst(PUBKEY_LENGTH))
         
         let instructionsBlock = Shortvec.decodeLength(buffer: byteArray)
@@ -193,12 +192,12 @@ extension Transaction.Message {
             let accountBlock = Shortvec.nextBlock(buffer: byteArray)
             byteArray = accountBlock.1
             
-            let accounts = accountBlock.0.bytes.map{ Int($0) }
+            let accounts = Array(accountBlock.0).map{ Int($0) }
             
             let dataBlock = Shortvec.nextBlock(buffer: byteArray)
             byteArray = dataBlock.1
                         
-            let compiledInstruction = CompiledInstruction(programIdIndex: programIdIndex, accounts: accounts, data: dataBlock.0.bytes)
+            let compiledInstruction = CompiledInstruction(programIdIndex: programIdIndex, accounts: accounts, data: Array(dataBlock.0))
             instructions.append(compiledInstruction)
         }
         

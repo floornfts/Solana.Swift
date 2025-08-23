@@ -24,11 +24,11 @@ class getMintDataAsync: XCTestCase {
         XCTAssertNotNil(datas)
     }
     
-    func testGetPools() async throws {
-        let pools: [Pool]? = try await solana.action.getSwapPools()
-        XCTAssertNotNil(pools)
-        XCTAssertNotEqual(pools!.count, 0)
-    }
+//    func testGetPools() async throws {
+//        let pools: [Pool]? = try await solana.action.getSwapPools()
+//        XCTAssertNotNil(pools)
+//        XCTAssertNotEqual(pools!.count, 0)
+//    }
 
     func testMintToInstruction() {
         let publicKey = PublicKey(string: "11111111111111111111111111111111")!

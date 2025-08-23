@@ -11,7 +11,7 @@ import XCTest
 
 class HMACTests: XCTestCase {
 
-    private let key = "key".bytes
+    private let key = Array("key".utf8)
     private let data = "test".data(using: .utf8)!
 
     func testSha512Function() {

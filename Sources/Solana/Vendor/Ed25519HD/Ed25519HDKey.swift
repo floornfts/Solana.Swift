@@ -15,7 +15,7 @@ public struct Ed25519HDKey {
     public static let hardenedOffset = 0x80000000
 
     public static func getMasterKeyFromSeed(_ seed: Hex) -> Result<Keys, Error> {
-        let hmacKey = ed25519Curve.bytes
+        let hmacKey = Array(Data(ed25519Curve.utf8))
 
         guard let entropy = hmacSha512(message: Data(hex: seed), key: Data(hmacKey)) else {
             return .failure(.hmacCanNotAuthenticate)
@@ -28,7 +28,7 @@ public struct Ed25519HDKey {
     private static func CKDPriv(keys: Keys, index: UInt32) -> Result<Keys, Error> {
         var bytes = [UInt8]()
         bytes.append(UInt8(0))
-        bytes += keys.key.bytes
+        bytes += Array(keys.key)
         bytes += index.edBytes
         let data = Data(bytes)
 

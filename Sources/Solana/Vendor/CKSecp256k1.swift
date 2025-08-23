@@ -34,7 +34,7 @@ struct CKSecp256k1 {
      */
     static func generatePublicKey(withPrivateKey privateKeyData: Data, compression isCompression: Bool) -> Data? {
         let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN))!
-        let prvKey = privateKeyData.bytes
+        let prvKey = Array(privateKeyData)
         var pKey = secp256k1_pubkey()
 
         var result = secp256k1_ec_pubkey_create(context, &pKey, prvKey)
@@ -61,8 +61,8 @@ struct CKSecp256k1 {
      {
          secp256k1_context *context = secp256k1_context_create(SECP256K1_CONTEXT_SIGN);
          
-         const unsigned char *prvKey = (const unsigned char *)privateKeyData.bytes;
-         const unsigned char *msg = (const unsigned char *)msgData.bytes;
+         const unsigned char *prvKey = (const unsigned char *)Array(privateKeyData);
+         const unsigned char *msg = (const unsigned char *)Array(msgData);
          
          unsigned char *siga = malloc(64);
          secp256k1_ecdsa_signature sig;
@@ -83,8 +83,8 @@ struct CKSecp256k1 {
      */
     static func compactSignData(msgData: Data, withPrivateKey privateKeyData: Data) -> Data? {
         let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_SIGN))!
-        let prvKey = privateKeyData.bytes
-        let msg = msgData.bytes
+        let prvKey = Array(privateKeyData)
+        let msg = Array(msgData)
         let siga = UnsafeMutablePointer<UInt8>.allocate(capacity: 64)
         var sig = secp256k1_ecdsa_signature()
 
@@ -106,10 +106,10 @@ struct CKSecp256k1 {
     {
         secp256k1_context *context = secp256k1_context_create(SECP256K1_CONTEXT_VERIFY | SECP256K1_CONTEXT_SIGN);
         
-        const unsigned char *sig = (const unsigned char *)sigData.bytes;
-        const unsigned char *msg = (const unsigned char *)msgData.bytes;
-        
-        const unsigned char *pubKey = (const unsigned char *)pubKeyData.bytes;
+                const unsigned char *sig = (const unsigned char *)Array(sigData);
+        const unsigned char *msg = (const unsigned char *)Array(msgData);
+
+        const unsigned char *pubKey = (const unsigned char *)Array(pubKeyData);
         
         secp256k1_pubkey pKey;
         int pubResult = secp256k1_ec_pubkey_parse(context, &pKey, pubKey, pubKeyData.length);
@@ -127,10 +127,10 @@ struct CKSecp256k1 {
     static func verifySignedData(sigData: Data, withMessageData msgData: Data, usePublickKey pubKeyData: Data) -> Int32 {
 
         let context = secp256k1_context_create(UInt32(SECP256K1_CONTEXT_VERIFY | SECP256K1_CONTEXT_SIGN))!
-        let sig = sigData.bytes
-        let msg = msgData.bytes
+        let sig = Array(sigData)
+        let msg = Array(msgData)
 
-        let pubKey = pubKeyData.bytes
+        let pubKey = Array(pubKeyData)
         var pKey = secp256k1_pubkey()
 
         let pubResult = secp256k1_ec_pubkey_parse(context, &pKey, pubKey, pubKeyData.count)

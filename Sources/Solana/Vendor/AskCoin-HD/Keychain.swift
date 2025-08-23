@@ -51,7 +51,7 @@ class Keychain: NSObject {
         guard let hmac = hmacSha512(message: Data(seedData.seed), key: keyData) else {
             return nil
         }
-        self.init(hmac: hmac.bytes)
+        self.init(hmac: Array(hmac))
         isMasterKey = true
 	}
 
@@ -71,7 +71,7 @@ class Keychain: NSObject {
 
 	public lazy var fingerprint: UInt32 = {
 		if let id = self.identifier {
-			return UInt32(bytes: id.bytes[0..<4])
+			return UInt32(bytes: Array(id)[0..<4])
 		}
 		return 0
 	}()
@@ -218,7 +218,7 @@ class Keychain: NSObject {
 		let indexBE = hardened ? (edge + index) : index
 		data += indexBE.ask_hexToData()
 
-        let digestArray = hmacSha512(message: data, key: chCode)!.bytes
+        let digestArray = Array(hmacSha512(message: data, key: chCode)!)
 
 		let factor = BInt(data: Data(digestArray[0..<32]))
         guard let curveOrder = BInt(hex: "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141") else {

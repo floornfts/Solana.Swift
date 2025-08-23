@@ -315,7 +315,7 @@ public extension Transaction {
             let signature = byteArray[0..<SIGNATURE_LENGTH]
             byteArray = Data(byteArray.dropFirst(SIGNATURE_LENGTH))
 
-            signatures.append(signature.bytes)
+            signatures.append(Array(signature))
         }
         
         return try populateTransaction(fromMessage: Message.from(buffer: byteArray), signatures: signatures)
@@ -329,7 +329,7 @@ public extension Transaction {
         var sigs: [Transaction.Signature] = []
         
         for (index, signature) in signatures.enumerated() {
-            let signatureEncoded = Base58.encode(signature) == Base58.encode(DEFAULT_SIGNATURE.bytes) ? nil : signature
+            let signatureEncoded = Base58.encode(signature) == Base58.encode(Array(DEFAULT_SIGNATURE)) ? nil : signature
             
             let publicKey = fromMessage.accountKeys[index].publicKey
             

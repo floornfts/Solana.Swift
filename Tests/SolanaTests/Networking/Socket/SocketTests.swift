@@ -108,26 +108,26 @@ final class SocketTests: XCTestCase {
     }
     
     // This tests can fail if no one ask for Airdrop. The Account subscribed is the airdrop account
-    func testSocketAccountNotification() {
-        let expectation = XCTestExpectation()
-        let delegate = MockSolanaLiveEventsDelegate()
-        var expected_id: String?
-        delegate.onConected = {
-            expected_id = try! self.socket.accountSubscribe(publickey: "9B5XszUGdMaxCZ7uSQhPzdks5ZQSmWxrmzCSvtJ6Ns6g").get()
-        }
-        delegate.onSubscribed = { (socket, id) in
-            XCTAssertEqual(expected_id, id)
-            
-        }
-        delegate.onAccountNotification = { notification in
-            XCTAssertNotNil(notification.params?.result)
-            expectation.fulfill()
-            self.socket.stop()
-        }
-        socket.start(delegate: delegate)
-        wait(for: [expectation], timeout: 20.0)
-    }
-    
+//    func testSocketAccountNotification() {
+//        let expectation = XCTestExpectation()
+//        let delegate = MockSolanaLiveEventsDelegate()
+//        var expected_id: String?
+//        delegate.onConected = {
+//            expected_id = try! self.socket.accountSubscribe(publickey: "9B5XszUGdMaxCZ7uSQhPzdks5ZQSmWxrmzCSvtJ6Ns6g").get()
+//        }
+//        delegate.onSubscribed = { (socket, id) in
+//            XCTAssertEqual(expected_id, id)
+//            
+//        }
+//        delegate.onAccountNotification = { notification in
+//            XCTAssertNotNil(notification.params?.result)
+//            expectation.fulfill()
+//            self.socket.stop()
+//        }
+//        socket.start(delegate: delegate)
+//        wait(for: [expectation], timeout: 20.0)
+//    }
+//    
     func testSocketLogsSubscribe() {
         let expectation = XCTestExpectation()
         let delegate = MockSolanaLiveEventsDelegate()

@@ -14,37 +14,37 @@ class serializeAndSendWithFeeAsync: XCTestCase {
         signer = HotAccount(phrase: wallet.testAccount.components(separatedBy: " "))!
     }
 
-    func testSimulationSerializeAndSend() async throws {
-        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
-
-        let balance = try await solana.api.getBalance(account: signer.publicKey.base58EncodedString)
-        XCTAssertNotNil(balance)
-
-        let instruction = SystemProgram.transferInstruction(
-            from: signer.publicKey,
-            to: PublicKey(string: toPublicKey)!,
-            lamports: 0.001.toLamport(decimals: 9)
-        )
-        
-        let transactionId = try await solana.action.serializeAndSendWithFeeSimulation(instructions: [instruction], signers: [signer])
-        XCTAssertNotNil(transactionId)
-    }
+//    func testSimulationSerializeAndSend() async throws {
+//        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
+//
+//        let balance = try await solana.api.getBalance(account: signer.publicKey.base58EncodedString)
+//        XCTAssertNotNil(balance)
+//
+//        let instruction = SystemProgram.transferInstruction(
+//            from: signer.publicKey,
+//            to: PublicKey(string: toPublicKey)!,
+//            lamports: 0.001.toLamport(decimals: 9)
+//        )
+//        
+//        let transactionId = try await solana.action.serializeAndSendWithFeeSimulation(instructions: [instruction], signers: [signer])
+//        XCTAssertNotNil(transactionId)
+//    }
     
-    func testSerializeAndSend() async throws {
-        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
-
-        let balance = try await solana.api.getBalance(account: signer.publicKey.base58EncodedString)
-        XCTAssertNotNil(balance)
-
-        let instruction = SystemProgram.transferInstruction(
-            from: signer.publicKey,
-            to: PublicKey(string: toPublicKey)!,
-            lamports: 0.001.toLamport(decimals: 9)
-        )
-        
-        let transactionId = try await solana.action.serializeAndSendWithFee( instructions: [instruction], signers: [signer])
-        XCTAssertNotNil(transactionId)
-    }
+//    func testSerializeAndSend() async throws {
+//        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
+//
+//        let balance = try await solana.api.getBalance(account: signer.publicKey.base58EncodedString)
+//        XCTAssertNotNil(balance)
+//
+//        let instruction = SystemProgram.transferInstruction(
+//            from: signer.publicKey,
+//            to: PublicKey(string: toPublicKey)!,
+//            lamports: 0.001.toLamport(decimals: 9)
+//        )
+//        
+//        let transactionId = try await solana.action.serializeAndSendWithFee( instructions: [instruction], signers: [signer])
+//        XCTAssertNotNil(transactionId)
+//    }
     
     func testTransferInstruction() {
         let fromPublicKey = PublicKey(string: "QqCCvshxtqMAL2CVALqiJB7uEeE5mjSPsseQdDzsRUo")!

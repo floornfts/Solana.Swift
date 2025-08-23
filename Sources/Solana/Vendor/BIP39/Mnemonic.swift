@@ -124,7 +124,7 @@ public class Mnemonic {
         let ENT = bytes.count * 8
         let CS = ENT / 32
 
-        let hash = sha256(data: Data(bytes)).bytes
+        let hash = Array(sha256(data: Data(bytes)))
         let hashbits = String(hash.flatMap { ("00000000" + String($0, radix: 2)).suffix(8) })
         return String(hashbits.prefix(CS))
     }
@@ -132,8 +132,8 @@ public class Mnemonic {
     public var seed: [UInt8] {
         let mnemonic = (self.phrase.joined(separator: " ") as NSString).decomposedStringWithCompatibilityMapping
         let salt = (("mnemonic" + passphrase) as NSString).decomposedStringWithCompatibilityMapping
-        let data = pbkdf2(hash: CCPBKDFAlgorithm(kCCPRFHmacAlgSHA512), password: mnemonic, salt: Data(salt.bytes), keyByteCount: 64, rounds: 2048)!
-        return data.bytes
+        let data = pbkdf2(hash: CCPBKDFAlgorithm(kCCPRFHmacAlgSHA512), password: mnemonic, salt: Data(salt.utf8), keyByteCount: 64, rounds: 2048)!
+        return Array(data)
     }
 }
 

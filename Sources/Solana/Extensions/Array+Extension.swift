@@ -1,4 +1,5 @@
 import Foundation
+import Beet
 
 extension Array {
   @inlinable
@@ -75,6 +76,19 @@ public extension Array where Element == UInt8 {
       return
     }
 
-    append(contentsOf: decodedData.bytes)
+    append(contentsOf: Array(decodedData))
+  }
+}
+
+// Extension to support BytesEncodable arrays
+public extension Array where Element: BytesEncodable {
+  var bytes: [UInt8] {
+    return self.flatMap { element in
+      if let publicKey = element as? PublicKey {
+        return publicKey.bytes
+      }
+      // Add support for other BytesEncodable types as needed
+      return []
+    }
   }
 }

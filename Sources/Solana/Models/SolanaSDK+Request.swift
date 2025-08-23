@@ -10,10 +10,20 @@ public struct Transfer {
         result.append(contentsOf: keyIndeces) // keyIndeces
         result.append(UInt8(12))   // FIXME transfer data size
 
-        result += UInt32(2).bytes // Program Index
+        result += Data([UInt8(truncatingIfNeeded: UInt32(2) >> 0),
+                        UInt8(truncatingIfNeeded: UInt32(2) >> 8),
+                        UInt8(truncatingIfNeeded: UInt32(2) >> 16),
+                        UInt8(truncatingIfNeeded: UInt32(2) >> 24)]) // Program Index
 
         let lamports = 3000
-        result += UInt64(lamports).bytes
+        result += Data([UInt8(truncatingIfNeeded: UInt64(lamports) >> 0),
+                        UInt8(truncatingIfNeeded: UInt64(lamports) >> 8),
+                        UInt8(truncatingIfNeeded: UInt64(lamports) >> 16),
+                        UInt8(truncatingIfNeeded: UInt64(lamports) >> 24),
+                        UInt8(truncatingIfNeeded: UInt64(lamports) >> 32),
+                        UInt8(truncatingIfNeeded: UInt64(lamports) >> 40),
+                        UInt8(truncatingIfNeeded: UInt64(lamports) >> 48),
+                        UInt8(truncatingIfNeeded: UInt64(lamports) >> 56)])
 
         return result
     }

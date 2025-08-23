@@ -67,8 +67,8 @@ class BorshCodableTests: XCTestCase {
 
         let buf = try! BorshEncoder().encode(new_mint)
         
-        XCTAssertEqual(buf2.bytes.count, buf.bytes.count)
-        XCTAssertEqual(buf2.bytes, buf.bytes)
+        XCTAssertEqual(buf2.count, buf.count)
+        XCTAssertEqual(buf2, buf)
 
                 
         XCTAssertEqual("QqCCvshxtqMAL2CVALqiJB7uEeE5mjSPsseQdDzsRUo", new_mint.mintAuthority!.base58EncodedString)
@@ -86,7 +86,7 @@ class BorshCodableTests: XCTestCase {
         let buf = try! BorshEncoder().encode(key)
         XCTAssertEqual(key.data, buf)
         
-        XCTAssertEqual(PublicKey(bytes: buf.bytes)!.base58EncodedString, key.base58EncodedString)
+        XCTAssertEqual(PublicKey(bytes: Array(buf))!.base58EncodedString, key.base58EncodedString)
         let key2 = try! BorshDecoder().decode(PublicKey.self, from: buf)
         
         XCTAssertEqual(key2.base58EncodedString, key.base58EncodedString)
@@ -100,8 +100,8 @@ class BorshCodableTests: XCTestCase {
         
         let generateInfoDecoded = try! BorshDecoder().decode(AccountInfo.self, from: expectedBuf)
 
-        XCTAssertEqual(expectedBuf.bytes.count, generatedBuf.bytes.count)
-        XCTAssertEqual(expectedBuf.bytes, generatedBuf.bytes)
+        XCTAssertEqual(Array(expectedBuf).count, Array(generatedBuf).count)
+        XCTAssertEqual(Array(expectedBuf), Array(generatedBuf))
 
                 
         XCTAssertEqual("QqCCvshxtqMAL2CVALqiJB7uEeE5mjSPsseQdDzsRUo", generateInfo.mint.base58EncodedString)
@@ -143,8 +143,8 @@ class BorshCodableTests: XCTestCase {
         let generatedTokenSwapInfo = try! BorshDecoder().decode(TokenSwapInfo.self, from: expectedBuf)
         let generatedBuf = try! BorshEncoder().encode(generatedTokenSwapInfo)
         
-        XCTAssertEqual(expectedBuf.bytes.count, generatedBuf.bytes.count)
-        XCTAssertEqual(expectedBuf.bytes, generatedBuf.bytes)
+        XCTAssertEqual(Array(expectedBuf).count, Array(generatedBuf).count)
+        XCTAssertEqual(Array(expectedBuf), Array(generatedBuf))
         
         XCTAssertEqual(1, generatedTokenSwapInfo.version)
         XCTAssertEqual("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", generatedTokenSwapInfo.tokenProgramId.base58EncodedString)
@@ -159,7 +159,7 @@ class BorshCodableTests: XCTestCase {
     func testReaderAndWriter() {
         let value = Test(x: 255, y: 20, z: "123", q: [1, 2, 3], r: [SubTest(a: PublicKey(string: "HG2gLyDxmYGUfNWnvf81bJQj38twnF2aQivpkxficJbn")!, b: 31), SubTest(a: PublicKey(string: "HG2gLyDxmYGUfNWnvf81bJQj38twnF2aQivpkxficJbn")!, b: 31), SubTest(a: PublicKey(string: "HG2gLyDxmYGUfNWnvf81bJQj38twnF2aQivpkxficJbn")!, b: 31)])
         let buf = try! BorshEncoder().encode(value)
-        var binaryReader = BinaryReader(bytes: buf.bytes)
+        var binaryReader = BinaryReader(bytes: Array(buf))
         let newBuf = try! Test(from: &binaryReader)
 
         XCTAssertEqual(newBuf.x, 255)
@@ -170,10 +170,10 @@ class BorshCodableTests: XCTestCase {
         var writtenBuf = Data()
         try! newBuf.serialize(to: &writtenBuf)
 
-        var newReader = BinaryReader(bytes: writtenBuf.bytes)
+        var newReader = BinaryReader(bytes: Array(writtenBuf))
         let newTest = try! Test(from: &newReader)
 
-        XCTAssertEqual(buf.bytes, writtenBuf.bytes)
+        XCTAssertEqual(Array(buf), Array(writtenBuf))
         XCTAssertEqual(newBuf.x, newTest.x)
         XCTAssertEqual(newBuf.y, newTest.y)
         XCTAssertEqual(newBuf.z, newTest.z)

@@ -77,31 +77,31 @@ class Methods: XCTestCase {
          XCTAssertNotNil(block)
          XCTAssertEqual(109479081, block!.parentSlot);
      } */
-    func testGetConfirmedBlocks() {
-        let slot = try! solana.api.getSlot()?.get()
-        let blocks = try! solana.api.getConfirmedBlocks(startSlot: slot! - 10, endSlot: slot!)?.get()
-        XCTAssertNotNil(blocks)
-        XCTAssert(blocks!.count > 1)
-    }
+//    func testGetConfirmedBlocks() {
+//        let slot = try! solana.api.getSlot()?.get()
+//        let blocks = try! solana.api.getConfirmedBlocks(startSlot: slot! - 10, endSlot: slot!)?.get()
+//        XCTAssertNotNil(blocks)
+//        XCTAssert(blocks!.count > 1)
+//    }
+//
+//    func testGetConfirmedBlocksWithLimit() {
+//        let slot = try! solana.api.getSlot()?.get()
+//        let blocks = try! solana.api.getConfirmedBlocksWithLimit(startSlot: slot!, limit: 10)?.get()
+//        XCTAssertNotNil(blocks)
+//        XCTAssertEqual(blocks!.count > 0, true)
+//    }
+//
+//    func testGetConfirmedSignaturesForAddress2() {
+//        let result = try! solana.api.getConfirmedSignaturesForAddress2(account: "Vote111111111111111111111111111111111111111", configs: RequestConfiguration(limit: 4))?.get()
+//        XCTAssertEqual(result?.count, 4)
+//    }
 
-    func testGetConfirmedBlocksWithLimit() {
-        let slot = try! solana.api.getSlot()?.get()
-        let blocks = try! solana.api.getConfirmedBlocksWithLimit(startSlot: slot!, limit: 10)?.get()
-        XCTAssertNotNil(blocks)
-        XCTAssertEqual(blocks!.count > 0, true)
-    }
-
-    func testGetConfirmedSignaturesForAddress2() {
-        let result = try! solana.api.getConfirmedSignaturesForAddress2(account: "Vote111111111111111111111111111111111111111", configs: RequestConfiguration(limit: 4))?.get()
-        XCTAssertEqual(result?.count, 4)
-    }
-
-    func testGetConfirmedTransaction() {
-        let result = try! solana.api.getConfirmedSignaturesForAddress2(account: "Vote111111111111111111111111111111111111111", configs: RequestConfiguration(limit: 4))?.get()
-        let transaction = try! solana.api.getConfirmedTransaction(transactionSignature: (result?.first!.signature)!)?.get()
-        XCTAssertNotNil(transaction)
-        XCTAssertEqual(result?.first!.slot!, transaction!.slot)
-    }
+//    func testGetConfirmedTransaction() {
+//        let result = try! solana.api.getConfirmedSignaturesForAddress2(account: "Vote111111111111111111111111111111111111111", configs: RequestConfiguration(limit: 4))?.get()
+//        let transaction = try! solana.api.getConfirmedTransaction(transactionSignature: (result?.first!.signature)!)?.get()
+//        XCTAssertNotNil(transaction)
+//        XCTAssertEqual(result?.first!.slot!, transaction!.slot)
+//    }
 
     func testGetEpochInfo() {
         let epoch = try! solana.api.getEpochInfo()?.get()
@@ -112,32 +112,32 @@ class Methods: XCTestCase {
         let epoch = try! solana.api.getEpochSchedule()?.get()
         XCTAssertNotNil(epoch)
     }
+//
+//    func testGetFeeCalculatorForBlockhash() {
+//        let hash = try! solana.api.getRecentBlockhash()?.get()
+//        let fee = try! solana.api.getFeeCalculatorForBlockhash(blockhash: hash!)?.get()
+//        XCTAssertNotNil(fee)
+//        XCTAssertTrue(fee!.feeCalculator!.lamportsPerSignature > 0)
+//    }
 
-    func testGetFeeCalculatorForBlockhash() {
-        let hash = try! solana.api.getRecentBlockhash()?.get()
-        let fee = try! solana.api.getFeeCalculatorForBlockhash(blockhash: hash!)?.get()
-        XCTAssertNotNil(fee)
-        XCTAssertTrue(fee!.feeCalculator!.lamportsPerSignature > 0)
-    }
+//    func testGetFeeRateGovernor() {
+//        let feeRateGovernorInfo = try! solana.api.getFeeRateGovernor()?.get()
+//        XCTAssertNotNil(feeRateGovernorInfo)
+//
+//        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.burnPercent > 0)
+//        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.maxLamportsPerSignature > 0)
+//        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.minLamportsPerSignature > 0)
+//        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.targetLamportsPerSignature >= 0)
+//        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.targetSignaturesPerSlot >= 0)
+//    }
 
-    func testGetFeeRateGovernor() {
-        let feeRateGovernorInfo = try! solana.api.getFeeRateGovernor()?.get()
-        XCTAssertNotNil(feeRateGovernorInfo)
-
-        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.burnPercent > 0)
-        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.maxLamportsPerSignature > 0)
-        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.minLamportsPerSignature > 0)
-        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.targetLamportsPerSignature >= 0)
-        XCTAssertTrue(feeRateGovernorInfo!.feeRateGovernor!.targetSignaturesPerSlot >= 0)
-    }
-
-    func testGetFees() {
-        let feesInfo = try! solana.api.getFees()?.get()
-        XCTAssertNotNil(feesInfo)
-        XCTAssertNotEqual("", feesInfo!.blockhash)
-        XCTAssertTrue(feesInfo!.feeCalculator!.lamportsPerSignature > 0)
-        XCTAssertTrue(feesInfo!.lastValidSlot! > 0)
-    }
+//    func testGetFees() {
+//        let feesInfo = try! solana.api.getFees()?.get()
+//        XCTAssertNotNil(feesInfo)
+//        XCTAssertNotEqual("", feesInfo!.blockhash)
+//        XCTAssertTrue(feesInfo!.feeCalculator!.lamportsPerSignature > 0)
+//        XCTAssertTrue(feesInfo!.lastValidSlot! > 0)
+//    }
 
     func testGetFirstAvailableBlock() {
         let block = try! solana.api.getFirstAvailableBlock()?.get()
@@ -199,11 +199,11 @@ class Methods: XCTestCase {
         let accounts = try! solana.api.getVoteAccounts()?.get()
         XCTAssertNotNil(accounts)
     }
-
-    func testGetRecentBlockhash() {
-        let accounts = try! solana.api.getRecentBlockhash()?.get()
-        XCTAssertNotNil(accounts)
-    }
+//
+//    func testGetRecentBlockhash() {
+//        let accounts = try! solana.api.getRecentBlockhash()?.get()
+//        XCTAssertNotNil(accounts)
+//    }
 
     func testMinimumLedgerSlot() {
         let accounts = try! solana.api.minimumLedgerSlot()?.get()

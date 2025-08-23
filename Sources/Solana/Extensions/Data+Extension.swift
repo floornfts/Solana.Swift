@@ -16,6 +16,6 @@ extension Data {
     }
 
     public func toHexString() -> String {
-        self.bytes.toHexString()
+        Array(self).toHexString()
     }
 }

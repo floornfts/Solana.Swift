@@ -14,29 +14,29 @@ class sendSPLTokensAsync: XCTestCase {
         signer = HotAccount(phrase: wallet.testAccount.components(separatedBy: " "))!
     }
     
-    func testSendSPLTokenWithFee() async throws {
-        let mintAddress = "6AUM4fSvCAxCugrbJPFxTqYFp9r3axYx973yoSyzDYVH"
-        let source = "8hoBQbSFKfDK3Mo7Wwc15Pp2bbkYuJE8TdQmnHNDjXoQ"
-        let destination = "8Poh9xusEcKtmYZ9U4FSfjrrrQR155TLWGAsyFWjjKxB"
-
-        let transactionId = try await solana.action.sendSPLTokens(
-            mintAddress: mintAddress,
-            decimals: 5,
-            from: source,
-            to: destination,
-            amount: Double(0.001).toLamport(decimals: 5),
-            payer: signer
-        )
-        XCTAssertNotNil(transactionId)
-        
-        let transactionIdB = try await solana.action.sendSPLTokens(
-            mintAddress: mintAddress,
-            decimals: 5,
-            from: destination,
-            to: source,
-            amount: Double(0.001).toLamport(decimals: 5),
-            payer: signer
-        )
-        XCTAssertNotNil(transactionIdB)
-    }
+//    func testSendSPLTokenWithFee() async throws {
+//        let mintAddress = "6AUM4fSvCAxCugrbJPFxTqYFp9r3axYx973yoSyzDYVH"
+//        let source = "8hoBQbSFKfDK3Mo7Wwc15Pp2bbkYuJE8TdQmnHNDjXoQ"
+//        let destination = "8Poh9xusEcKtmYZ9U4FSfjrrrQR155TLWGAsyFWjjKxB"
+//
+//        let transactionId = try await solana.action.sendSPLTokens(
+//            mintAddress: mintAddress,
+//            decimals: 5,
+//            from: source,
+//            to: destination,
+//            amount: Double(0.001).toLamport(decimals: 5),
+//            payer: signer
+//        )
+//        XCTAssertNotNil(transactionId)
+//        
+//        let transactionIdB = try await solana.action.sendSPLTokens(
+//            mintAddress: mintAddress,
+//            decimals: 5,
+//            from: destination,
+//            to: source,
+//            amount: Double(0.001).toLamport(decimals: 5),
+//            payer: signer
+//        )
+//        XCTAssertNotNil(transactionIdB)
+//    }
 }

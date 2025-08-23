@@ -24,7 +24,7 @@ extension Action {
                 transaction.sign(signers: signers)
                 .flatMap { transaction.serialize() }
                 .flatMap {
-                    let base64 = $0.bytes.toBase64()
+                    let base64 = Array($0).toBase64()
                     return .success(base64)
                 }
                 .onSuccess { onComplete(.success($0)) }

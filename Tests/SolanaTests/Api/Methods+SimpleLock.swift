@@ -217,31 +217,31 @@ extension Api {
         return result
     }
 
-    func getFeeRateGovernor() -> Result<Fee, Error>? {
-        var result: Result<Fee, Error>?
-        let lock = RunLoopSimpleLock()
-        lock.dispatch { [weak self] in
-            self?.getFeeRateGovernor {
-                result = $0
-                lock.stop()
-            }
-        }
-        lock.run()
-        return result
-    }
-
-    func getFeeCalculatorForBlockhash(blockhash: String, commitment: Commitment? = nil) -> Result<Fee, Error>? {
-        var result: Result<Fee, Error>?
-        let lock = RunLoopSimpleLock()
-        lock.dispatch { [weak self] in
-            self?.getFeeCalculatorForBlockhash(blockhash: blockhash, commitment: commitment) {
-                result = $0
-                lock.stop()
-            }
-        }
-        lock.run()
-        return result
-    }
+//    func getFeeRateGovernor() -> Result<Fee, Error>? {
+//        var result: Result<Fee, Error>?
+//        let lock = RunLoopSimpleLock()
+//        lock.dispatch { [weak self] in
+//            self?.getFeeRateGovernor {
+//                result = $0
+//                lock.stop()
+//            }
+//        }
+//        lock.run()
+//        return result
+//    }
+//
+//    func getFeeCalculatorForBlockhash(blockhash: String, commitment: Commitment? = nil) -> Result<Fee, Error>? {
+//        var result: Result<Fee, Error>?
+//        let lock = RunLoopSimpleLock()
+//        lock.dispatch { [weak self] in
+//            self?.getFeeCalculatorForBlockhash(blockhash: blockhash, commitment: commitment) {
+//                result = $0
+//                lock.stop()
+//            }
+//        }
+//        lock.run()
+//        return result
+//    }
 
     func getFees(commitment: Commitment? = nil) -> Result<Fee, Error>? {
         var result: Result<Fee, Error>?

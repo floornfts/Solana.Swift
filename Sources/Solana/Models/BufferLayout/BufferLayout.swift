@@ -23,14 +23,14 @@ public struct Buffer<T: BufferLayout>: Codable {
         // Unable to get parsed data, fallback to decoding base64
         let stringData = (try? container.decode([String].self).first) ?? (try? container.decode(String.self))
         guard let string = stringData,
-              let data = Data(base64Encoded: string)?.bytes,
-              data.count >= T.BUFFER_LENGTH
+              let decodedData = Data(base64Encoded: string),
+              decodedData.count >= T.BUFFER_LENGTH
         else {
             value = nil
             return
         }
 
-        var reader = BinaryReader(bytes: data)
+        var reader = BinaryReader(bytes: Array(decodedData))
         value = try? T.init(from: &reader)
     }
 }
@@ -45,12 +45,12 @@ public struct PureData: Decodable {
         // Unable to get parsed data, fallback to decoding base64
         let stringData = (try? container.decode([String].self).first) ?? (try? container.decode(String.self))
         guard let string = stringData,
-              let data = Data(base64Encoded: string)?.bytes,
-              data.count >= PureData.BUFFER_LENGTH
+              let decodedData = Data(base64Encoded: string),
+              decodedData.count >= PureData.BUFFER_LENGTH
         else {
             value = nil
             return
         }
-        value = Data(data)
+        value = decodedData
     }
 }

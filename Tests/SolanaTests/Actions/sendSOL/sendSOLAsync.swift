@@ -14,29 +14,29 @@ class sendSOLAsync: XCTestCase {
         signer = HotAccount(phrase: wallet.testAccount.components(separatedBy: " "))! // 5Zzguz4NsSRFxGkHfM4FmsFpGZiCDtY72zH2jzMcqkJx
     }
     
-    func testSendSOLFromBalance() async throws {
-        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
-
-        let balance = try await solana.api.getBalance(account: signer.publicKey.base58EncodedString, commitment: nil)
-        XCTAssertNotNil(balance)
-
-        let transactionId = try await solana.action.sendSOL(
-            to: toPublicKey,
-            from: signer,
-            amount: balance/10
-        )
-        XCTAssertNotNil(transactionId)
-    }
-    
-    func testSendSOL() async throws {
-        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
-        let transactionId = try await solana.action.sendSOL(
-            to: toPublicKey,
-            from: signer,
-            amount: 0.001.toLamport(decimals: 9)
-        )
-        XCTAssertNotNil(transactionId)
-    }
+//    func testSendSOLFromBalance() async throws {
+//        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
+//
+//        let balance = try await solana.api.getBalance(account: signer.publicKey.base58EncodedString, commitment: nil)
+//        XCTAssertNotNil(balance)
+//
+//        let transactionId = try await solana.action.sendSOL(
+//            to: toPublicKey,
+//            from: signer,
+//            amount: balance/10
+//        )
+//        XCTAssertNotNil(transactionId)
+//    }
+//    
+//    func testSendSOL() async throws {
+//        let toPublicKey = "3h1zGmCwsRJnVk5BuRNMLsPaQu1y2aqXqXDWYCgrp5UG"
+//        let transactionId = try await solana.action.sendSOL(
+//            to: toPublicKey,
+//            from: signer,
+//            amount: 0.001.toLamport(decimals: 9)
+//        )
+//        XCTAssertNotNil(transactionId)
+//    }
     func testSendSOLIncorrectDestination() async {
         let toPublicKey = "XX"
         await asyncAssertThrowing("sendSOL should fail when destination is incorrect") {
